@@ -36,6 +36,7 @@ const NavBar: React.FC<NavBarProps> = ({ menu }) => {
       top="0"
       zIndex="10"
       width="100%"
+      backgroundColor="white"
     >
       <Logo logoName="weather" />
       <Spacer />

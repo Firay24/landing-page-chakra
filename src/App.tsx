@@ -1,12 +1,16 @@
-import { Flex } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
 import NavBar from "./components/Shared/NavBar";
+import HeroSection from "./components/Hero";
+import LogoSection from "./components/Logo";
 
 function App() {
   const menu = ["Research", "Climate", "Service", "About Us"];
   return (
-    <Flex>
+    <Stack>
       <NavBar menu={menu}></NavBar>
-    </Flex>
+      <HeroSection />
+      <LogoSection />
+    </Stack>
   );
 }
 

@@ -4,7 +4,17 @@ import SnowImage from "../assets/snow.jpg";
 import SpringImage from "../assets/spring.jpg";
 import SummerImage from "../assets/summer.jpg";
 
-export const cardContent = [
+type CardContent = {
+  title: string;
+  season: string;
+  location: string;
+  temp: string;
+  status: string;
+  wind: string;
+  src: string; // Anda harus menentukan tipe yang sesuai untuk gambar, misalnya 'string' atau 'HTMLImageElement'
+};
+
+const cardContent: CardContent[] = [
   {
     title: "Craig Adderley",
     season: "Fall Season",
@@ -12,7 +22,7 @@ export const cardContent = [
     temp: "30",
     status: "Save",
     wind: "20 m/s",
-    src: CraigImage,
+    src: CraigImage, // Gantilah ini dengan tipe data yang sesuai untuk gambar
   },
   {
     title: "June Rain",
@@ -21,7 +31,7 @@ export const cardContent = [
     temp: "22",
     status: "Save",
     wind: "40 m/s",
-    src: RainImage,
+    src: RainImage, // Gantilah ini dengan tipe data yang sesuai untuk gambar
   },
   {
     title: "Christmas Tree",
@@ -30,7 +40,7 @@ export const cardContent = [
     temp: "16",
     status: "Save",
     wind: "14 m/s",
-    src: SnowImage,
+    src: SnowImage, // Gantilah ini dengan tipe data yang sesuai untuk gambar
   },
   {
     title: "The Cherry Blossoms",
@@ -39,7 +49,7 @@ export const cardContent = [
     temp: "31",
     status: "Save",
     wind: "18 m/s",
-    src: SpringImage,
+    src: SpringImage, // Gantilah ini dengan tipe data yang sesuai untuk gambar
   },
   {
     title: "Time to Sunbathe",
@@ -48,6 +58,8 @@ export const cardContent = [
     temp: "34",
     status: "Save",
     wind: "23 m/s",
-    src: SummerImage,
+    src: SummerImage, // Gantilah ini dengan tipe data yang sesuai untuk gambar
   },
 ];
+
+export default cardContent;
