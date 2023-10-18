@@ -26,7 +26,6 @@ const Login = () => {
   const handleLogin = () => {
     if (email === "fira@gmail.com" && password === "1234") {
       localStorage.setItem("isLoggedIn", "true");
-      window.location.reload();
       navigate("/");
     } else {
       alert("Login gagal");
