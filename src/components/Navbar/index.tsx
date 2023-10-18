@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Stack,
   HStack,
@@ -11,17 +11,13 @@ import {
   Center,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import Logo from "./logo";
+import Logo from "./sections/logo";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { AiOutlineClose } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { FaPowerOff } from "react-icons/fa6";
 
-interface NavBarProps {
-  menu: string[];
-}
-
-const NavBar: React.FC<NavBarProps> = ({ menu }) => {
+const NavBar = (props: { menu: string[]; isCurrentDashboard?: boolean }) => {
   const isMobile = useBreakpointValue({ base: true, md: false });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -64,7 +60,7 @@ const NavBar: React.FC<NavBarProps> = ({ menu }) => {
               width="full"
             >
               <List spacing="20px">
-                {menu.map((item, index) => (
+                {props.menu.map((item, index) => (
                   <ListItem key={index}>
                     <Link _hover={{ textDecor: "none", color: "blue" }}>
                       {item}
@@ -97,7 +93,7 @@ const NavBar: React.FC<NavBarProps> = ({ menu }) => {
       ) : (
         <Box>
           <List display="flex" gap="10">
-            {menu.map((item, index) => (
+            {props.menu.map((item, index) => (
               <ListItem key={index}>
                 <Link _hover={{ textDecor: "none", color: "blue" }}>
                   {item}
@@ -116,6 +112,7 @@ const NavBar: React.FC<NavBarProps> = ({ menu }) => {
                 <FaPowerOff />
               </Button>
               <Button
+                isDisabled={props.isCurrentDashboard || false}
                 onClick={handleButtonDashboard}
                 backgroundColor="blackAlpha.700"
                 color="white"

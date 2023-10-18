@@ -11,11 +11,11 @@ import {
   GridItem,
   SimpleGrid,
 } from "@chakra-ui/react";
-import HeroImage from "../../assets/hero.jpg";
+import HeroImage from "../../../assets/hero.jpg";
 import { AiFillCloud } from "react-icons/ai";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import TempList from "./tempList";
-import dataTemp from "../../util/dataTemp";
+import dataTemp from "../../../util/dataTemp";
 
 const HeroSection = () => {
   console.log(dataTemp);

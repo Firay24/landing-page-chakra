@@ -7,11 +7,12 @@ const Cards = (props: {
   title: string;
   count: string;
   details: string;
+  path: string;
 }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("project");
+    navigate(props.path);
   };
   return (
     <Card

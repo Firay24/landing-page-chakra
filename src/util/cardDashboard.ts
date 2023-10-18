@@ -8,6 +8,7 @@ type CardDashboard = {
   title: string;
   count: string;
   details: string;
+  path: string;
 };
 
 const cardDataDashboard: CardDashboard[] = [
@@ -16,24 +17,28 @@ const cardDataDashboard: CardDashboard[] = [
     title: "Project",
     count: "18",
     details: "2 completed",
+    path: "project",
   },
   {
     icon: FiMenu,
     title: "Active Task",
     count: "121",
     details: "10 completed",
+    path: "active",
   },
   {
     icon: FaUserGroup,
     title: "Teams",
     count: "100",
     details: "1 completed",
+    path: "teams",
   },
   {
     icon: IoEarthOutline,
     title: "Productivity",
     count: "76%",
     details: "5% completed",
+    path: "productivity",
   },
 ];
 

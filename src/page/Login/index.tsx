@@ -13,8 +13,8 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { Logo } from "./Logo";
-import { OAuthButtonGroup } from "./OAuthButtonGroup";
+import { Logo } from "./section/Logo";
+import { OAuthButtonGroup } from "./section/OAuthButtonGroup";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 

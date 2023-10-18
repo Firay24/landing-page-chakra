@@ -1,7 +1,7 @@
 import { Stack } from "@chakra-ui/react";
-import NavBar from "../../components/Shared/NavBar"
-import HeroSection from "../../components/Hero"
-import LogoSection from "../../components/Logo"
+import NavBar from "../../components/Navbar";
+import HeroSection from "./sections/hero";
+import LogoSection from "./sections/logoSection";
 
 const LandingPage = () => {
   const menu = ["Research", "Climate", "Service", "About Us"];
@@ -11,7 +11,7 @@ const LandingPage = () => {
       <HeroSection />
       <LogoSection />
     </Stack>
-  )
-}
+  );
+};
 
-export default LandingPage
+export default LandingPage;

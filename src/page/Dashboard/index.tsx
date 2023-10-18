@@ -1,11 +1,13 @@
-import Cards from "./card";
+import Cards from "./section/card";
 import { Stack, HStack, Heading, Spacer, Button } from "@chakra-ui/react";
 import cardDataDashboard from "../../util/cardDashboard";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import NavBar from "../../components/Navbar";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const menu = ["Project", "Active", "Productivity", "Teams"];
 
   const handleBack = () => {
     navigate("/");
@@ -13,11 +15,13 @@ const Dashboard = () => {
 
   return (
     <Stack>
+      <NavBar menu={menu} isCurrentDashboard={true} />
       <Stack
         backgroundColor="blue.400"
         padding={5}
         justifyContent="start"
         alignItems="start"
+        marginTop="90px"
       >
         <HStack width="100%" color="white">
           <Heading
@@ -45,6 +49,7 @@ const Dashboard = () => {
               title={item.title}
               count={item.count}
               details={item.details}
+              path={item.path}
             />
           ))}
         </HStack>
