@@ -14,6 +14,8 @@ import {
 import Logo from "./logo";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { AiOutlineClose } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+import { FaPowerOff } from "react-icons/fa6";
 
 interface NavBarProps {
   menu: string[];
@@ -22,9 +24,20 @@ interface NavBarProps {
 const NavBar: React.FC<NavBarProps> = ({ menu }) => {
   const isMobile = useBreakpointValue({ base: true, md: false });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleButtonDashboard = () => {
+    navigate("dashboard");
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    window.location.reload();
+    navigate("/");
   };
 
   return (
@@ -99,18 +112,16 @@ const NavBar: React.FC<NavBarProps> = ({ menu }) => {
           <Spacer />
           <Box>
             <Center gap="10px">
-              <Link
-                fontWeight="medium"
-                _hover={{ textDecor: "none", color: "blue" }}
-              >
-                Login
-              </Link>
+              <Button color="red.600" onClick={handleLogout}>
+                <FaPowerOff />
+              </Button>
               <Button
-                backgroundColor="blackAlpha.800"
+                onClick={handleButtonDashboard}
+                backgroundColor="blackAlpha.700"
                 color="white"
                 _hover={{ color: "white", backgroundColor: "blackAlpha.800" }}
               >
-                Create Account
+                Dashboard
               </Button>
             </Center>
           </Box>

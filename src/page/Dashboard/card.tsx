@@ -14,7 +14,12 @@ const Cards = (props: {
     navigate("project");
   };
   return (
-    <Card width="20%" onClick={handleClick}>
+    <Card
+      width="20%"
+      onClick={handleClick}
+      _hover={{ backgroundColor: "gray.200" }}
+      cursor="pointer"
+    >
       <CardBody>
         <HStack>
           <Text>{props.title}</Text>
