@@ -1,4 +1,5 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useContext, useState } from "react";
 import {
   Stack,
   HStack,
@@ -10,14 +11,19 @@ import {
   Button,
   Center,
   useBreakpointValue,
+  Switch,
+  Text,
 } from "@chakra-ui/react";
 import Logo from "./sections/logo";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { AiOutlineClose } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { FaPowerOff } from "react-icons/fa6";
+import { ThemeContext } from "../../router/appRouter";
+import { backgroundContainer, customBorder } from "./styles";
 
 const NavBar = (props: { menu: string[]; isCurrentDashboard?: boolean }) => {
+  const theme: any = useContext(ThemeContext);
   const isMobile = useBreakpointValue({ base: true, md: false });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -45,7 +51,8 @@ const NavBar = (props: { menu: string[]; isCurrentDashboard?: boolean }) => {
       top="0"
       zIndex="10"
       width="100%"
-      backgroundColor="white"
+      backgroundColor={backgroundContainer()}
+      border={customBorder()}
     >
       <Logo logoName="weather" />
       <Spacer />
@@ -120,6 +127,11 @@ const NavBar = (props: { menu: string[]; isCurrentDashboard?: boolean }) => {
               >
                 Dashboard
               </Button>
+              <Text>{JSON.stringify(theme.currentTheme)}</Text>
+              <Switch
+                isChecked={theme.currentTheme}
+                onChange={theme.switchTheme}
+              />
             </Center>
           </Box>
         </>

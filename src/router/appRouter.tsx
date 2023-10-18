@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Route,
   RouterProvider,
@@ -12,27 +13,48 @@ import Teams from "../page/Dashboard/pages/teams";
 import Productivity from "../page/Dashboard/pages/productivity";
 import Login from "../page/Login";
 import CheckAuth from "../middleware/authMiddleware";
+import { createContext, useEffect, useState } from "react";
+import Layout from "../page/Layout";
 
+export const ThemeContext: any = createContext(null);
 const AppRouter = () => {
-  console.log(localStorage.getItem("isLoggedIn"));
+  const [currentTheme, setCurrentTheme] = useState(false);
+  const switchTheme = () => {
+    setCurrentTheme(!currentTheme);
+    localStorage.currentTheme = !currentTheme;
+  };
+  useEffect(() => {
+    try {
+      setCurrentTheme(JSON.parse(localStorage.currentTheme));
+    } catch (error) {
+      setCurrentTheme(true);
+      localStorage.currentTheme = true;
+    }
+  }, []);
   const router = createBrowserRouter(
     createRoutesFromChildren(
       <>
         <Route path="/" element={<CheckAuth />}>
-          <Route index element={<LandingPage />} />
-          <Route path="dashboard">
-            <Route index element={<Dashboard />} />
-            <Route path="project" element={<Project />} />
-            <Route path="active" element={<Active />} />
-            <Route path="teams" element={<Teams />} />
-            <Route path="productivity" element={<Productivity />} />
+          <Route path="/" element={<Layout />}>
+            <Route index element={<LandingPage />} />
+            <Route path="dashboard">
+              <Route index element={<Dashboard />} />
+              <Route path="project" element={<Project />} />
+              <Route path="active" element={<Active />} />
+              <Route path="teams" element={<Teams />} />
+              <Route path="productivity" element={<Productivity />} />
+            </Route>
           </Route>
         </Route>
         <Route path="/login" element={<Login />} />
       </>
     )
   );
-  return <RouterProvider router={router} />;
+  return (
+    <ThemeContext.Provider value={{ currentTheme, switchTheme }}>
+      <RouterProvider router={router} />
+    </ThemeContext.Provider>
+  );
 };
 
 export default AppRouter;
