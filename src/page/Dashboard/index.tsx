@@ -4,6 +4,7 @@ import cardDataDashboard from "../../util/cardDashboard";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/Navbar";
+import { backgroundContainer2 } from "../../components/Navbar/styles";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const Dashboard = () => {
     <Stack>
       <NavBar menu={menu} isCurrentDashboard={true} />
       <Stack
-        backgroundColor="blue.400"
+        backgroundColor={backgroundContainer2()}
         padding={5}
         justifyContent="start"
         alignItems="start"

@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { primaryTextColor } from "../../../../components/Navbar/styles";
 
 const Project = () => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const Project = () => {
           <MdOutlineArrowBackIosNew />
         </Button>
       </HStack>
-      <TableContainer>
+      <TableContainer color={primaryTextColor()}>
         <Table variant="simple">
           <TableCaption>Imperial to metric conversion factors</TableCaption>
           <Thead>

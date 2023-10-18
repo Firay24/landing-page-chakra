@@ -16,7 +16,10 @@ import { AiFillCloud } from "react-icons/ai";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import TempList from "./tempList";
 import dataTemp from "../../../util/dataTemp";
-import { primaryTextColor } from "../../../components/Navbar/styles";
+import {
+  backgroundContainer,
+  primaryTextColor,
+} from "../../../components/Navbar/styles";
 
 const HeroSection = () => {
   console.log(dataTemp);
@@ -54,11 +57,7 @@ const HeroSection = () => {
       >
         <Grid templateColumns="repeat(3, 1fr)" marginX="160px">
           <GridItem colSpan={2}>
-            <Heading
-              fontSize="5xl"
-              fontWeight="semibold"
-              color={primaryTextColor()}
-            >
+            <Heading fontSize="5xl" fontWeight="semibold" color="gray.800">
               Provide you a world wide{" "}
               <chakra.span color="blue.700" fontWeight="bold">
                 weather
@@ -72,7 +71,12 @@ const HeroSection = () => {
             </Text>
           </GridItem>
           <GridItem>
-            <Card width="fit-content" dropShadow="lg" aspectRatio="1/1">
+            <Card
+              width="fit-content"
+              dropShadow="lg"
+              aspectRatio="1/1"
+              backgroundColor={backgroundContainer()}
+            >
               <CardBody justifyContent="center" alignItems="center">
                 <Stack>
                   <HStack
@@ -90,7 +94,7 @@ const HeroSection = () => {
                     alignItems="center"
                   >
                     <AiFillCloud />
-                    <Text color="gray.800" fontSize="4xl">
+                    <Text color={primaryTextColor()} fontSize="4xl">
                       235 &deg;K
                     </Text>
                   </HStack>
@@ -121,7 +125,13 @@ const HeroSection = () => {
         justifyContent="center"
         zIndex="2"
       >
-        <Card width="80%" boxShadow="md" paddingY="2" paddingX="8">
+        <Card
+          width="80%"
+          boxShadow="md"
+          paddingY="2"
+          paddingX="8"
+          backgroundColor={backgroundContainer()}
+        >
           <CardBody>
             <SimpleGrid columns={4} gridRow={2} spacing={1}>
               {(() => {

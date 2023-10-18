@@ -20,7 +20,9 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { FaPowerOff } from "react-icons/fa6";
 import { ThemeContext } from "../../router/appRouter";
-import { backgroundContainer, customBorder } from "./styles";
+import { backgroundContainer, customBorder, primaryTextColor } from "./styles";
+import { MdDarkMode } from "react-icons/md";
+import { BsFillSunFill } from "react-icons/bs";
 
 const NavBar = (props: { menu: string[]; isCurrentDashboard?: boolean }) => {
   const theme: any = useContext(ThemeContext);
@@ -102,7 +104,10 @@ const NavBar = (props: { menu: string[]; isCurrentDashboard?: boolean }) => {
           <List display="flex" gap="10">
             {props.menu.map((item, index) => (
               <ListItem key={index}>
-                <Link _hover={{ textDecor: "none", color: "blue" }}>
+                <Link
+                  _hover={{ textDecor: "none", color: "blue" }}
+                  color={primaryTextColor()}
+                >
                   {item}
                 </Link>
               </ListItem>
@@ -127,7 +132,9 @@ const NavBar = (props: { menu: string[]; isCurrentDashboard?: boolean }) => {
               >
                 Dashboard
               </Button>
-              <Text>{JSON.stringify(theme.currentTheme)}</Text>
+              <Text color="yellow.400" fontSize="2xl">
+                {theme.currentTheme ? <BsFillSunFill /> : <MdDarkMode />}
+              </Text>
               <Switch
                 isChecked={theme.currentTheme}
                 onChange={theme.switchTheme}

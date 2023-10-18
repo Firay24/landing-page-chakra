@@ -47,7 +47,15 @@ export const backgroundContainer2 = () => {
   if (currentTheme()) {
     return "rgba(37, 53, 54, 1)";
   } else {
-    return "rgba(233, 237, 247, 1)";
+    return "blue.600";
+  }
+};
+
+export const backgroundColorHover = () => {
+  if (currentTheme()) {
+    return "#171919";
+  } else {
+    return "gray.200";
   }
 };
 
