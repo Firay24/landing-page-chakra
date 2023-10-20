@@ -11,6 +11,8 @@ import Project from "../page/Dashboard/pages/project";
 import Active from "../page/Dashboard/pages/active";
 import Teams from "../page/Dashboard/pages/teams";
 import Productivity from "../page/Dashboard/pages/productivity";
+import { PropertiPage } from "../page/Dashboard/pages/properti/view";
+import PropertiCreatePage from "../page/Dashboard/pages/properti/create";
 import Login from "../page/Login";
 import CheckAuth from "../middleware/authMiddleware";
 import { createContext, useEffect, useState } from "react";
@@ -43,6 +45,8 @@ const AppRouter = () => {
               <Route path="active" element={<Active />} />
               <Route path="teams" element={<Teams />} />
               <Route path="productivity" element={<Productivity />} />
+              <Route path="properti/:id" element={<PropertiPage />} />
+              <Route path="properti/create" element={<PropertiCreatePage />} />
             </Route>
           </Route>
         </Route>

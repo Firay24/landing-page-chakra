@@ -22,7 +22,6 @@ import {
 } from "../../../components/Navbar/styles";
 
 const HeroSection = () => {
-  console.log(dataTemp);
   return (
     <Stack>
       <Stack
