@@ -115,6 +115,7 @@ const Dashboard = () => {
           >
             {property &&
               property.data &&
+              property.data.length > 0 &&
               property.data.map((item: any, index: number) => (
                 <CardProperties
                   handleButtonDelete={() => handleButtonDelete(item.id)}

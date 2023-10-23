@@ -6,6 +6,7 @@ import {
   FETCH_PROPERTY_FAILED,
   FETCH_PROPERTY_BYID_SUCCEEDED,
   ADD_PROPERTY,
+  UPDATE_PROPERTY,
 } from "../constant/property";
 import { Dispatch } from "redux";
 import { decrypt } from "../../util/descrypt";
@@ -31,8 +32,13 @@ export const fetchPropertyByIdSucceeded = (property: any) => ({
   property,
 });
 
-export const addPoperty = (property: any) => ({
+export const addProperty = (property: any) => ({
   type: ADD_PROPERTY,
+  property,
+});
+
+export const updateProperty = (property: any) => ({
+  type: UPDATE_PROPERTY,
   property,
 });
 
@@ -83,7 +89,33 @@ export const createProperty = (property: any) => {
         qs.stringify(data),
         config
       );
-      dispatch(addPoperty(property));
+      dispatch(addProperty(property));
+      alert("Sucessfully");
+    } catch (error) {
+      dispatch(fetchPropertyFailed(error));
+    }
+  };
+};
+
+export const editProperty = (property: any, id: any) => {
+  return async (dispatch: Dispatch) => {
+    dispatch(fetchPropertyStarted());
+    try {
+      const data = {
+        payload: encrypt(property),
+      };
+      const config = {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      };
+      await axios.patch(
+        `https://probation.sirkell.com/probation/test/properties/${id}`,
+        qs.stringify(data),
+        config
+      );
+      alert("successfully");
+      dispatch(updateProperty(property));
     } catch (error) {
       dispatch(fetchPropertyFailed(error));
     }

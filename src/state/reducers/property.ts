@@ -5,6 +5,7 @@ import {
   FETCH_PROPERTY_FAILED,
   FETCH_PROPERTY_BYID_SUCCEEDED,
   ADD_PROPERTY,
+  UPDATE_PROPERTY,
 } from "../constant/property";
 
 const initialState = {
@@ -49,6 +50,12 @@ export default function propertyReducer(state = initialState, action: any) {
         ...state,
         status: "default",
         payload: [state.payload, action.payload],
+      };
+    }
+    case UPDATE_PROPERTY: {
+      return {
+        ...state,
+        status: "default",
       };
     }
     default: {

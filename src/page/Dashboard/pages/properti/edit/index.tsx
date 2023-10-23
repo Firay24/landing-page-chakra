@@ -20,8 +20,13 @@ import axios from "axios";
 import { decrypt } from "../../../../../util/descrypt";
 import qs from "qs";
 import { encrypt } from "../../../../../util/encrypt";
+import { useDispatch, useSelector } from "react-redux";
+import { selectPropertyStatus } from "../../../../../state/selectors/property";
+import { editProperty } from "../../../../../state/actions/property";
 
 const EditPropertiPage = () => {
+  const dispatch = useDispatch();
+  const status = useSelector(selectPropertyStatus);
   const menu = ["Project", "Active", "Productivity", "Teams"];
   const navigate = useNavigate();
   const { id } = useParams();
@@ -98,6 +103,14 @@ const EditPropertiPage = () => {
     }
   };
 
+  const onUpdateProperty = (e: any) => {
+    e.preventDefault();
+    dispatch(editProperty(properti, id));
+    if (status === "default") {
+      navigate("/dashboard");
+    }
+  };
+
   useEffect(() => {
     if (prevProperti) {
       setProperti({
@@ -113,8 +126,6 @@ const EditPropertiPage = () => {
   useEffect(() => {
     getData(id);
   }, [id]);
-  console.log(encrypt(properti));
-  console.log(properti);
 
   return (
     <Stack>
@@ -133,53 +144,55 @@ const EditPropertiPage = () => {
             <MdOutlineArrowBackIosNew />
           </Button>
         </HStack>
-        <Stack marginTop="20px">
-          <FormControl display="flex" flexDirection="column" gap={6}>
-            <Stack>
+        <form onSubmit={onUpdateProperty}>
+          <Stack marginTop="20px">
+            <FormControl display="flex" flexDirection="column" gap={6}>
               <Stack>
-                <FormLabel>Nama Properti</FormLabel>
-                <Input
-                  type="text"
-                  name="property_name"
-                  value={properti.property_name}
-                  onChange={handleChange}
-                />
+                <Stack>
+                  <FormLabel>Nama Properti</FormLabel>
+                  <Input
+                    type="text"
+                    name="property_name"
+                    value={properti.property_name}
+                    onChange={handleChange}
+                  />
+                </Stack>
+                <Stack>
+                  <FormLabel>Alamat</FormLabel>
+                  <Input
+                    type="text"
+                    name="alamat"
+                    value={properti.alamat}
+                    onChange={handleChange}
+                  />
+                </Stack>
+                <Stack>
+                  <FormLabel>Status</FormLabel>
+                  <Select
+                    name="is_premium"
+                    placeholder="Select status"
+                    value={properti.is_premium ? "true" : "false"}
+                    onChange={handleChange}
+                  >
+                    <option value="true">Premium</option>
+                    <option value="false">No-premium</option>
+                  </Select>
+                </Stack>
+                <Stack>
+                  <FormLabel>Deskripsi</FormLabel>
+                  <Textarea
+                    name="description"
+                    value={properti.description}
+                    onChange={handleChange}
+                  />
+                </Stack>
               </Stack>
               <Stack>
-                <FormLabel>Alamat</FormLabel>
-                <Input
-                  type="text"
-                  name="alamat"
-                  value={properti.alamat}
-                  onChange={handleChange}
-                />
+                <Button type="submit">Submit</Button>
               </Stack>
-              <Stack>
-                <FormLabel>Status</FormLabel>
-                <Select
-                  name="is_premium"
-                  placeholder="Select status"
-                  value={properti.is_premium ? "true" : "false"}
-                  onChange={handleChange}
-                >
-                  <option value="true">Premium</option>
-                  <option value="false">No-premium</option>
-                </Select>
-              </Stack>
-              <Stack>
-                <FormLabel>Deskripsi</FormLabel>
-                <Textarea
-                  name="description"
-                  value={properti.description}
-                  onChange={handleChange}
-                />
-              </Stack>
-            </Stack>
-            <Stack>
-              <Button onClick={() => handleSubmit(id)}>Submit</Button>
-            </Stack>
-          </FormControl>
-        </Stack>
+            </FormControl>
+          </Stack>
+        </form>
       </Stack>
     </Stack>
   );
