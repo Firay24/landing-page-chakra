@@ -4,9 +4,13 @@ import {
   FETCH_PROPERTY_START,
   FETCH_PROPERTY_SUCCEEDED,
   FETCH_PROPERTY_FAILED,
+  FETCH_PROPERTY_BYID_SUCCEEDED,
+  ADD_PROPERTY,
 } from "../constant/property";
 import { Dispatch } from "redux";
 import { decrypt } from "../../util/descrypt";
+import { encrypt } from "../../util/encrypt";
+import qs from "qs";
 
 export const fetchPropertyStarted = () => ({
   type: FETCH_PROPERTY_START,
@@ -22,6 +26,16 @@ export const fetchPropertyFailed = (error: any) => ({
   error,
 });
 
+export const fetchPropertyByIdSucceeded = (property: any) => ({
+  type: FETCH_PROPERTY_BYID_SUCCEEDED,
+  property,
+});
+
+export const addPoperty = (property: any) => ({
+  type: ADD_PROPERTY,
+  property,
+});
+
 export const fetchProperty = () => {
   return async (dispatch: Dispatch) => {
     dispatch(fetchPropertyStarted());
@@ -30,6 +44,46 @@ export const fetchProperty = () => {
         "https://probation.sirkell.com/probation/test/properties"
       );
       dispatch(fetchPropertySucceeded(decrypt(response.data)));
+    } catch (error) {
+      dispatch(fetchPropertyFailed(error));
+    }
+  };
+};
+
+export const fetchPropertyByID = (id: any) => {
+  return async (dispatch: Dispatch) => {
+    dispatch(fetchPropertyStarted());
+    try {
+      const response = await axios.get(
+        `https://probation.sirkell.com/probation/test/properties/${id}`
+      );
+      dispatch(fetchPropertyByIdSucceeded(decrypt(response.data)));
+    } catch (error) {
+      dispatch(fetchPropertyFailed(error));
+    }
+  };
+};
+
+export const createProperty = (property: any) => {
+  return async (dispatch: Dispatch) => {
+    dispatch(fetchPropertyStarted());
+    try {
+      const data = {
+        payload: encrypt(property),
+      };
+      const config = {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      };
+
+      console.log(data);
+      await axios.post(
+        "https://probation.sirkell.com/probation/test/properties",
+        qs.stringify(data),
+        config
+      );
+      dispatch(addPoperty(property));
     } catch (error) {
       dispatch(fetchPropertyFailed(error));
     }

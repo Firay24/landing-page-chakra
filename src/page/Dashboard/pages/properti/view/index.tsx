@@ -8,35 +8,29 @@ import {
   Button,
   Spacer,
 } from "@chakra-ui/react";
-import { decrypt } from "../../../../../util/descrypt";
 import NavBar from "../../../../../components/Navbar";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { primaryTextColor } from "../../../../../components/styles";
 import { BiSolidPencil } from "react-icons/bi";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectProperty,
+  selectPropertyStatus,
+} from "../../../../../state/selectors/property";
+import { fetchPropertyByID } from "../../../../../state/actions/property";
+import Loading from "../../../../../components/Loading";
 
 export const PropertiPage = () => {
+  const dispatch = useDispatch();
+  const property = useSelector(selectProperty);
+  const status = useSelector(selectPropertyStatus);
   const menu = ["Project", "Active", "Productivity", "Teams"];
-  const [properti, setProperti] = useState<{ data: any } | null>(null);
   const { id } = useParams();
   const navigate = useNavigate();
-
-  const getData = async (idproperti: any) => {
-    await axios
-      .get(
-        `https://probation.sirkell.com/probation/test/properties/${idproperti}`
-      )
-      .then((res: any) => {
-        setProperti(decrypt(res.data));
-      })
-      .catch((error) => {
-        console.log(error.response.status);
-      });
-  };
 
   const handleBack = () => {
     navigate("/dashboard");
@@ -47,13 +41,13 @@ export const PropertiPage = () => {
   };
 
   useEffect(() => {
-    getData(id);
-  }, [id]);
+    dispatch(fetchPropertyByID(id));
+  }, [dispatch]);
 
   return (
     <Stack>
       <NavBar menu={menu} isCurrentDashboard={true}></NavBar>
-      {properti && properti.data ? (
+      {status === "default" ? (
         <Stack
           marginTop="100px"
           marginLeft="50px"
@@ -64,12 +58,12 @@ export const PropertiPage = () => {
             <Stack
               fontSize="2xl"
               color={
-                properti && properti.data.is_premium ? "yellow.400" : "gray.400"
+                property && property.data.is_premium ? "yellow.400" : "gray.400"
               }
             >
               <FaStar />
             </Stack>
-            <Heading>{properti && properti.data.property_name}</Heading>
+            <Heading>{property && property.data.property_name}</Heading>
             <Spacer />
             <Button onClick={handleBack}>
               <MdOutlineArrowBackIosNew />
@@ -77,21 +71,23 @@ export const PropertiPage = () => {
           </HStack>
           <HStack>
             <HiOutlineLocationMarker />
-            <Text>{properti && properti.data.alamat}</Text>
+            <Text>{property && property.data.alamat}</Text>
           </HStack>
           <Stack width="100%" height="250px">
             <Image
               width="full"
               height="full"
-              src={properti && properti.data.image_url}
+              src={property && property.data.image_url}
               alt="image properti"
               objectFit="cover"
               objectPosition="center"
             />
           </Stack>
-          <Text>{properti && properti.data.description}</Text>
+          <Text>{property && property.data.description}</Text>
         </Stack>
-      ) : null}
+      ) : (
+        <Loading />
+      )}
       <Stack position="fixed" bottom="5" right="5" zIndex="100" padding={2}>
         <Button
           backgroundColor="blue.600"

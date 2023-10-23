@@ -49,6 +49,7 @@ const Dashboard = () => {
         .then((response) => {
           if (response.status === 200) {
             console.log("success");
+            dispatch(fetchProperty());
           }
         })
         .catch((error) => {
