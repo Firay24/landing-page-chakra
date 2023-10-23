@@ -7,6 +7,7 @@ import {
   FETCH_PROPERTY_BYID_SUCCEEDED,
   ADD_PROPERTY,
   UPDATE_PROPERTY,
+  DELETE_PROPERTY,
 } from "../constant/property";
 import { Dispatch } from "redux";
 import { decrypt } from "../../util/descrypt";
@@ -40,6 +41,11 @@ export const addProperty = (property: any) => ({
 export const updateProperty = (property: any) => ({
   type: UPDATE_PROPERTY,
   property,
+});
+
+export const deleteProperty = (id: any) => ({
+  type: DELETE_PROPERTY,
+  id,
 });
 
 export const fetchProperty = () => {
@@ -120,4 +126,22 @@ export const editProperty = (property: any, id: any) => {
       dispatch(fetchPropertyFailed(error));
     }
   };
+};
+
+export const removeProperty = (id: any) => {
+  const isConfirm = window.confirm("Yakin menghapus data?");
+
+  if (isConfirm) {
+    return async (dispatch: Dispatch) => {
+      dispatch(fetchPropertyStarted());
+      try {
+        await axios.delete(
+          `https://probation.sirkell.com/probation/test/properties/${id}`
+        );
+        dispatch(deleteProperty(id));
+      } catch (error) {
+        dispatch(fetchPropertyFailed(error));
+      }
+    };
+  }
 };

@@ -10,7 +10,7 @@ import {
   backgroundContainer2,
   primaryTextColor,
 } from "../../components/styles";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import CardProperties from "./section/cardProperties";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -19,7 +19,7 @@ import {
   selectProperty,
   selectPropertyStatus,
 } from "../../state/selectors/property";
-import { fetchProperty } from "../../state/actions/property";
+import { fetchProperty, removeProperty } from "../../state/actions/property";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -40,22 +40,14 @@ const Dashboard = () => {
     navigate("properti/create");
   };
 
-  const handleButtonDelete = (id: any) => {
-    const isConfirm = window.confirm("Yakin menghapus data?");
-
-    if (isConfirm) {
-      axios
-        .delete(`https://probation.sirkell.com/probation/test/properties/${id}`)
-        .then((response) => {
-          if (response.status === 200) {
-            console.log("success");
-            dispatch(fetchProperty());
-          }
-        })
-        .catch((error) => {
-          console.error("failed", error);
-        });
-    }
+  const onDelete = (id: any) => {
+    dispatch(removeProperty(id))
+      .then(() => {
+        dispatch(fetchProperty());
+      })
+      .catch((error: any) => {
+        console.error("Error deleting property: ", error);
+      });
   };
 
   return (
@@ -118,7 +110,7 @@ const Dashboard = () => {
               property.data.length > 0 &&
               property.data.map((item: any, index: number) => (
                 <CardProperties
-                  handleButtonDelete={() => handleButtonDelete(item.id)}
+                  handleButtonDelete={() => onDelete(item.id)}
                   properti={item}
                   key={index}
                 />

@@ -6,6 +6,7 @@ import {
   FETCH_PROPERTY_BYID_SUCCEEDED,
   ADD_PROPERTY,
   UPDATE_PROPERTY,
+  DELETE_PROPERTY,
 } from "../constant/property";
 
 const initialState = {
@@ -56,6 +57,17 @@ export default function propertyReducer(state = initialState, action: any) {
       return {
         ...state,
         status: "default",
+      };
+    }
+    case DELETE_PROPERTY: {
+      const propertyId = action.id;
+      const updatedProperty = state.property.filter(
+        (item) => item.id !== propertyId
+      );
+      return {
+        ...state,
+        status: "default",
+        property: updatedProperty,
       };
     }
     default: {
