@@ -5,7 +5,7 @@ import {
   backgroundContainer,
   primaryTextColor,
   backgroundColorHover,
-} from "../../../components/Navbar/styles";
+} from "../../../components/styles";
 
 const Cards = (props: {
   icon: JSX.Element;

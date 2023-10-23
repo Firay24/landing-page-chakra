@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { primaryTextColor } from "../../../../components/Navbar/styles";
+import { primaryTextColor } from "../../../../components/styles";
 
 const Project = () => {
   const navigate = useNavigate();

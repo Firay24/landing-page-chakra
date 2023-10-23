@@ -4,6 +4,7 @@ import CryptoAES from "crypto-js/aes";
 export const encrypt = (data: any) => {
   if (data && typeof data === "object") {
     const jsonData = JSON.stringify(data);
+    console.log(jsonData);
     const encrypt = CryptoAES.encrypt(jsonData, "testProbation");
     return encrypt.toString();
   } else {

@@ -1,25 +1,37 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  FormControl,
-  FormLabel,
+  HStack,
   Stack,
   Heading,
-  Input,
-  Textarea,
-  Select,
+  Spacer,
   Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Select,
+  Textarea,
 } from "@chakra-ui/react";
 import NavBar from "../../../../../components/Navbar";
-import { useState } from "react";
-import { encrypt } from "../../../../../util/encrypt";
-import axios from "axios";
-import qs from "qs";
-import { useNavigate } from "react-router-dom";
+import { MdOutlineArrowBackIosNew } from "react-icons/md";
+import { useNavigate, useParams } from "react-router-dom";
 import { primaryTextColor } from "../../../../../components/styles";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { decrypt } from "../../../../../util/descrypt";
+import qs from "qs";
+import { encrypt } from "../../../../../util/encrypt";
 
-const CreatePage = () => {
+const EditPropertiPage = () => {
   const menu = ["Project", "Active", "Productivity", "Teams"];
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [prevProperti, setPrevProperti] = useState({
+    property_name: "",
+    alamat: "",
+    description: "",
+    is_premium: false,
+    image_url: "http://dummyimage.com/171x148.png/ff4444/ffffff",
+  });
 
   const [properti, setProperti] = useState({
     property_name: "",
@@ -28,6 +40,20 @@ const CreatePage = () => {
     image_url: "http://dummyimage.com/171x148.png/ff4444/ffffff",
     is_premium: false,
   });
+
+  const getData = async (idproperti: any) => {
+    await axios
+      .get(
+        `https://probation.sirkell.com/probation/test/properties/${idproperti}`
+      )
+      .then((res: any) => {
+        const result = decrypt(res.data);
+        setPrevProperti(result.data);
+      })
+      .catch((error) => {
+        console.log(error.response.status);
+      });
+  };
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -45,10 +71,12 @@ const CreatePage = () => {
       }));
     }
   };
-  // console.log(encrypt(properti));
-  // console.log(properti);
 
-  const handleSubmit = async () => {
+  const handleBack = () => {
+    navigate("/dashboard");
+  };
+
+  const handleSubmit = async (id: any) => {
     try {
       const data = {
         payload: encrypt(properti),
@@ -58,30 +86,53 @@ const CreatePage = () => {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       };
-
-      await axios.post(
-        "https://probation.sirkell.com/probation/test/properties",
+      await axios.patch(
+        `https://probation.sirkell.com/probation/test/properties/${id}`,
         qs.stringify(data),
         config
       );
       alert("Sucessfully");
-      navigate("/dashboard");
+      navigate(`/dashboard/properti/${id}`);
     } catch (error) {
-      console.error("failed to create data");
+      console.error("failed to edit data");
     }
   };
 
+  useEffect(() => {
+    if (prevProperti) {
+      setProperti({
+        property_name: prevProperti.property_name,
+        alamat: prevProperti.alamat,
+        description: prevProperti.description,
+        image_url: "http://dummyimage.com/171x148.png/ff4444/ffffff",
+        is_premium: prevProperti.is_premium,
+      });
+    }
+  }, [prevProperti]);
+
+  useEffect(() => {
+    getData(id);
+  }, [id]);
+  console.log(encrypt(properti));
+  console.log(properti);
+
   return (
-    <Stack color={primaryTextColor()}>
-      <NavBar menu={menu} isLandingPage />
+    <Stack>
+      <NavBar menu={menu} isCurrentDashboard={true} />
       <Stack
         marginTop="100px"
         marginLeft="50px"
         marginRight="50px"
-        marginBottom="50px"
+        marginBottom="30px"
+        color={primaryTextColor()}
       >
-        <form action=""></form>
-        <Heading>Tambah Properti</Heading>
+        <HStack>
+          <Heading>Edit Data</Heading>
+          <Spacer />
+          <Button onClick={handleBack}>
+            <MdOutlineArrowBackIosNew />
+          </Button>
+        </HStack>
         <Stack marginTop="20px">
           <FormControl display="flex" flexDirection="column" gap={6}>
             <Stack>
@@ -125,7 +176,7 @@ const CreatePage = () => {
               </Stack>
             </Stack>
             <Stack>
-              <Button onClick={handleSubmit}>Submit</Button>
+              <Button onClick={() => handleSubmit(id)}>Submit</Button>
             </Stack>
           </FormControl>
         </Stack>
@@ -134,4 +185,4 @@ const CreatePage = () => {
   );
 };
 
-export default CreatePage;
+export default EditPropertiPage;

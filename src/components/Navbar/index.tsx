@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Stack,
   HStack,
@@ -20,22 +20,31 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { FaPowerOff } from "react-icons/fa6";
 import { ThemeContext } from "../../router/appRouter";
-import { backgroundContainer, customBorder, primaryTextColor } from "./styles";
+import { backgroundContainer, customBorder, primaryTextColor } from "../styles";
 import { MdDarkMode } from "react-icons/md";
 import { BsFillSunFill } from "react-icons/bs";
 
-const NavBar = (props: { menu: string[]; isCurrentDashboard?: boolean }) => {
+const NavBar = (props: {
+  menu: string[];
+  isCurrentDashboard?: boolean;
+  isLandingPage?: boolean;
+}) => {
   const theme: any = useContext(ThemeContext);
   const isMobile = useBreakpointValue({ base: true, md: false });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const [currencyPage, setCurrencyPage] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   const handleButtonDashboard = () => {
-    navigate("dashboard");
+    if (currencyPage) {
+      navigate("/dashboard");
+    } else {
+      navigate("dashboard");
+    }
   };
 
   const handleLogout = () => {
@@ -43,6 +52,12 @@ const NavBar = (props: { menu: string[]; isCurrentDashboard?: boolean }) => {
     window.location.reload();
     navigate("/");
   };
+
+  useEffect(() => {
+    if (props.isLandingPage) {
+      setCurrencyPage(true);
+    }
+  }, [props.isLandingPage]);
 
   return (
     <HStack
@@ -107,6 +122,7 @@ const NavBar = (props: { menu: string[]; isCurrentDashboard?: boolean }) => {
                 <Link
                   _hover={{ textDecor: "none", color: "blue" }}
                   color={primaryTextColor()}
+                  href="table"
                 >
                   {item}
                 </Link>

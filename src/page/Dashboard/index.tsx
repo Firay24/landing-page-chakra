@@ -6,11 +6,15 @@ import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/Navbar";
 import Loading from "../../components/Loading";
-import { backgroundContainer2 } from "../../components/Navbar/styles";
+import {
+  backgroundContainer2,
+  primaryTextColor,
+} from "../../components/styles";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { decrypt } from "../../util/descrypt";
 import CardProperties from "./section/cardProperties";
+import { AiOutlinePlus } from "react-icons/ai";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -42,6 +46,10 @@ const Dashboard = () => {
     navigate("/");
   };
 
+  const handleCreateButton = () => {
+    navigate("properti/create");
+  };
+
   const handleButtonDelete = (id: any) => {
     const isConfirm = window.confirm("Yakin menghapus data?");
 
@@ -58,6 +66,7 @@ const Dashboard = () => {
         });
     }
   };
+  console.log(properti);
 
   return (
     <Stack>
@@ -101,7 +110,7 @@ const Dashboard = () => {
         </HStack>
       </Stack>
       <Stack marginTop="30px" justifyContent="center" alignItems="center">
-        <Heading>Properti</Heading>
+        <Heading color={primaryTextColor()}>Properti</Heading>
         {loading ? (
           <Loading />
         ) : (
@@ -124,6 +133,17 @@ const Dashboard = () => {
               ))}
           </HStack>
         )}
+      </Stack>
+      <Stack position="fixed" bottom="5" right="5" zIndex="100" padding={2}>
+        <Button
+          backgroundColor="blue.600"
+          _hover={{ backgroundColor: "blue.700" }}
+          color="white"
+          rounded="full"
+          onClick={handleCreateButton}
+        >
+          <AiOutlinePlus />
+        </Button>
       </Stack>
     </Stack>
   );

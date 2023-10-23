@@ -19,7 +19,7 @@ import dataTemp from "../../../util/dataTemp";
 import {
   backgroundContainer,
   primaryTextColor,
-} from "../../../components/Navbar/styles";
+} from "../../../components/styles";
 
 const HeroSection = () => {
   return (

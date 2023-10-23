@@ -1,6 +1,6 @@
 import { HStack, Image, Text } from "@chakra-ui/react";
 import LogoImage from "../../../assets/logo.png";
-import { primaryTextColor } from "../styles";
+import { primaryTextColor } from "../../styles";
 
 const Logo = (props: { logoName: string }) => {
   return (

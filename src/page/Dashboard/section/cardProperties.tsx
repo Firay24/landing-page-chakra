@@ -14,11 +14,22 @@ import {
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { MdDelete } from "react-icons/md";
 import { FaCrown } from "react-icons/fa";
+import {
+  backgroundContainer,
+  primaryTextColor,
+} from "../../../components/styles";
 
 const CardProperties = (props: { properti: any; handleButtonDelete: any }) => {
   return (
-    <Stack width="300px">
-      <Card width="100%" height="100%" display="flex" flexDirection="column">
+    <Stack width="300px" height="400px">
+      <Card
+        width="100%"
+        height="100%"
+        display="flex"
+        flexDirection="column"
+        backgroundColor={backgroundContainer()}
+        color={primaryTextColor()}
+      >
         <Image
           src={props.properti.image_url}
           alt="properti image"

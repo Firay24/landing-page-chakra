@@ -1,6 +1,6 @@
 import { Stack } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
-import { backgroundColor } from "../components/Navbar/styles";
+import { backgroundColor } from "../components/styles";
 
 const Layout = () => {
   return (

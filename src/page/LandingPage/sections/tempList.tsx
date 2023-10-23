@@ -1,5 +1,5 @@
 import { HStack, Text } from "@chakra-ui/react";
-import { primaryTextColor } from "../../../components/Navbar/styles";
+import { primaryTextColor } from "../../../components/styles";
 
 const TempList = (props: { indicator: string; value: string }) => {
   return (
