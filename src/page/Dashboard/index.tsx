@@ -10,37 +10,27 @@ import {
   backgroundContainer2,
   primaryTextColor,
 } from "../../components/styles";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
-import { decrypt } from "../../util/descrypt";
 import CardProperties from "./section/cardProperties";
 import { AiOutlinePlus } from "react-icons/ai";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectProperty,
+  selectPropertyStatus,
+} from "../../state/selectors/property";
+import { fetchProperty } from "../../state/actions/property";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const property = useSelector(selectProperty);
+  const status = useSelector(selectPropertyStatus);
   const menu = ["Project", "Active", "Productivity", "Teams"];
-  const [properti, setProperti]: any = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  const getData = async () => {
-    await axios
-      .get("https://probation.sirkell.com/probation/test/properties")
-      .then((res: any) => {
-        setProperti(decrypt(res.data));
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error.response.status);
-      });
-  };
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getData();
-  }, []);
-
-  useEffect(() => {
-    getData();
-  }, [properti]);
+    dispatch(fetchProperty());
+  }, [dispatch]);
 
   const handleBack = () => {
     navigate("/");
@@ -66,7 +56,6 @@ const Dashboard = () => {
         });
     }
   };
-  console.log(properti);
 
   return (
     <Stack>
@@ -111,7 +100,7 @@ const Dashboard = () => {
       </Stack>
       <Stack marginTop="30px" justifyContent="center" alignItems="center">
         <Heading color={primaryTextColor()}>Properti</Heading>
-        {loading ? (
+        {status === "loading" ? (
           <Loading />
         ) : (
           <HStack
@@ -123,8 +112,9 @@ const Dashboard = () => {
             justifyContent="center"
             gap={5}
           >
-            {properti &&
-              properti.data.map((item: any, index: number) => (
+            {property &&
+              property.data &&
+              property.data.map((item: any, index: number) => (
                 <CardProperties
                   handleButtonDelete={() => handleButtonDelete(item.id)}
                   properti={item}
