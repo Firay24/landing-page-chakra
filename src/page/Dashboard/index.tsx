@@ -10,8 +10,7 @@ import {
   backgroundContainer2,
   primaryTextColor,
 } from "../../components/styles";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect } from "react";
 import CardProperties from "./section/cardProperties";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
@@ -20,6 +19,7 @@ import {
   selectPropertyStatus,
 } from "../../state/selectors/property";
 import { fetchProperty, removeProperty } from "../../state/actions/property";
+// import { fetchAllProperty } from "../../thunk/property";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -27,10 +27,15 @@ const Dashboard = () => {
   const status = useSelector(selectPropertyStatus);
   const menu = ["Project", "Active", "Productivity", "Teams"];
   const navigate = useNavigate();
+  // const { property, status } = useSelector((state: any) => state.property);
 
   useEffect(() => {
     dispatch(fetchProperty());
   }, [dispatch]);
+
+  // useEffect(() => {
+  //   dispatch(fetchAllProperty());
+  // }, [dispatch]);
 
   const handleBack = () => {
     navigate("/");

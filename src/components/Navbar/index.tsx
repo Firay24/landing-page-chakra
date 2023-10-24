@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+// import library from react and chakra ui
 import { useContext, useEffect, useState } from "react";
 import {
   Stack,
@@ -14,15 +16,21 @@ import {
   Switch,
   Text,
 } from "@chakra-ui/react";
-import Logo from "./sections/logo";
+import { useNavigate } from "react-router-dom";
+
+// import global state
+import { ThemeContext } from "../../router/appRouter";
+
+// import icon from react/icons
 import { RxHamburgerMenu } from "react-icons/rx";
 import { AiOutlineClose } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
 import { FaPowerOff } from "react-icons/fa6";
-import { ThemeContext } from "../../router/appRouter";
-import { backgroundContainer, customBorder, primaryTextColor } from "../styles";
 import { MdDarkMode } from "react-icons/md";
 import { BsFillSunFill } from "react-icons/bs";
+
+// import style global and local
+import { backgroundContainer, customBorder, primaryTextColor } from "../styles";
+import Logo from "./sections/logo";
 
 const NavBar = (props: {
   menu: string[];
@@ -32,13 +40,15 @@ const NavBar = (props: {
   const theme: any = useContext(ThemeContext);
   const isMobile = useBreakpointValue({ base: true, md: false });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navigate = useNavigate();
   const [currencyPage, setCurrencyPage] = useState(false);
+  const navigate = useNavigate();
 
+  // toggle to show menu when mobile
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  // button to navigate dashboard
   const handleButtonDashboard = () => {
     if (currencyPage) {
       navigate("/dashboard");
@@ -47,12 +57,14 @@ const NavBar = (props: {
     }
   };
 
+  // handle button logout, delete localStorage
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
     window.location.reload();
     navigate("/");
   };
 
+  // update currentPage status, current position in landingPage?
   useEffect(() => {
     if (props.isLandingPage) {
       setCurrencyPage(true);
