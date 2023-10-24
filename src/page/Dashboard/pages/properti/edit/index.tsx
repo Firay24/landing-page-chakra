@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+//
 import {
   HStack,
   Stack,
@@ -11,16 +13,22 @@ import {
   Select,
   Textarea,
 } from "@chakra-ui/react";
-import NavBar from "../../../../../components/Navbar";
-import { MdOutlineArrowBackIosNew } from "react-icons/md";
-import { useNavigate, useParams } from "react-router-dom";
-import { primaryTextColor } from "../../../../../components/styles";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { decrypt } from "../../../../../util/descrypt";
-import qs from "qs";
-import { encrypt } from "../../../../../util/encrypt";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+// import qs from "qs";
+
+// import components and stle global
+import NavBar from "../../../../../components/Navbar";
+import { primaryTextColor } from "../../../../../components/styles";
+// import icons from react icons
+import { MdOutlineArrowBackIosNew } from "react-icons/md";
+
+import { decrypt } from "../../../../../util/descrypt";
+// import { encrypt } from "../../../../../util/encrypt";
+
+// import state global and action from redux flow
 import { selectPropertyStatus } from "../../../../../state/selectors/property";
 import { editProperty } from "../../../../../state/actions/property";
 
@@ -81,27 +89,27 @@ const EditPropertiPage = () => {
     navigate("/dashboard");
   };
 
-  const handleSubmit = async (id: any) => {
-    try {
-      const data = {
-        payload: encrypt(properti),
-      };
-      const config = {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      };
-      await axios.patch(
-        `https://probation.sirkell.com/probation/test/properties/${id}`,
-        qs.stringify(data),
-        config
-      );
-      alert("Sucessfully");
-      navigate(`/dashboard/properti/${id}`);
-    } catch (error) {
-      console.error("failed to edit data");
-    }
-  };
+  // const handleSubmit = async (id: any) => {
+  //   try {
+  //     const data = {
+  //       payload: encrypt(properti),
+  //     };
+  //     const config = {
+  //       headers: {
+  //         "Content-Type": "application/x-www-form-urlencoded",
+  //       },
+  //     };
+  //     await axios.patch(
+  //       `https://probation.sirkell.com/probation/test/properties/${id}`,
+  //       qs.stringify(data),
+  //       config
+  //     );
+  //     alert("Sucessfully");
+  //     navigate(`/dashboard/properti/${id}`);
+  //   } catch (error) {
+  //     console.error("failed to edit data");
+  //   }
+  // };
 
   const onUpdateProperty = (e: any) => {
     e.preventDefault();
@@ -144,6 +152,7 @@ const EditPropertiPage = () => {
             <MdOutlineArrowBackIosNew />
           </Button>
         </HStack>
+        {/* form components */}
         <form onSubmit={onUpdateProperty}>
           <Stack marginTop="20px">
             <FormControl display="flex" flexDirection="column" gap={6}>
@@ -187,6 +196,7 @@ const EditPropertiPage = () => {
                   />
                 </Stack>
               </Stack>
+              {/* submit button */}
               <Stack>
                 <Button type="submit">Submit</Button>
               </Stack>

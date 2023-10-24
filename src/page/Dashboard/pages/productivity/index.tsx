@@ -1,3 +1,4 @@
+// import library used
 import {
   TableContainer,
   Table,
@@ -14,9 +15,13 @@ import {
   Spacer,
   HStack,
 } from "@chakra-ui/react";
-import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+
+// import global style from components folders
 import { primaryTextColor } from "../../../../components/styles";
+
+// import react icons
+import { MdOutlineArrowBackIosNew } from "react-icons/md";
 
 const Project = () => {
   const navigate = useNavigate();
@@ -39,6 +44,7 @@ const Project = () => {
           <MdOutlineArrowBackIosNew />
         </Button>
       </HStack>
+      {/* table components */}
       <TableContainer color={primaryTextColor()}>
         <Table variant="simple">
           <TableCaption>Imperial to metric conversion factors</TableCaption>

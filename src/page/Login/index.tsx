@@ -19,7 +19,7 @@ import { OAuthButtonGroup } from "./section/OAuthButtonGroup";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setEmail, setPassword } from "../../state/reducers/auth";
+import { setEmail, setPassword } from "../../thunk/auth";
 
 const Login = () => {
   const dispatch = useDispatch();

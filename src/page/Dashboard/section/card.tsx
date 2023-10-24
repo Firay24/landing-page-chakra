@@ -1,6 +1,11 @@
+// import library used
 import { useNavigate } from "react-router-dom";
 import { HStack, Card, CardBody, Text, Button, Spacer } from "@chakra-ui/react";
+
+// import icons from react icons
 import { BiSolidShoppingBag } from "react-icons/bi";
+
+// import global style from components folder
 import {
   backgroundContainer,
   primaryTextColor,
@@ -16,6 +21,7 @@ const Cards = (props: {
 }) => {
   const navigate = useNavigate();
 
+  // handle click container in card to detail page card
   const handleClick = () => {
     navigate(props.path);
   };

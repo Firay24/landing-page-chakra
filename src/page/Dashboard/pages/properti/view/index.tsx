@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+// import library used
 import {
   HStack,
   Heading,
@@ -8,46 +10,62 @@ import {
   Button,
   Spacer,
 } from "@chakra-ui/react";
-import NavBar from "../../../../../components/Navbar";
-import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+// import component
+import NavBar from "../../../../../components/Navbar";
+import Loading from "../../../../../components/Loading";
+
+// import icons from react-icons
 import { FaStar } from "react-icons/fa";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { primaryTextColor } from "../../../../../components/styles";
 import { BiSolidPencil } from "react-icons/bi";
-import { useDispatch, useSelector } from "react-redux";
+
+// import state global and action from redux flow
 import {
   selectProperty,
   selectPropertyStatus,
 } from "../../../../../state/selectors/property";
 import { fetchPropertyByID } from "../../../../../state/actions/property";
-import Loading from "../../../../../components/Loading";
+import { fetchByIdProperty } from "../../../../../thunk/property";
 
 export const PropertiPage = () => {
   const dispatch = useDispatch();
-  const property = useSelector(selectProperty);
-  const status = useSelector(selectPropertyStatus);
+  // const property = useSelector(selectProperty);
+  // const status = useSelector(selectPropertyStatus);
   const menu = ["Project", "Active", "Productivity", "Teams"];
   const { id } = useParams();
   const navigate = useNavigate();
+  const { property, status } = useSelector((state: any) => state.property);
 
+  // handle button back to dashboard page
   const handleBack = () => {
     navigate("/dashboard");
   };
 
+  // handle button edit to edit page
   const handleEdit = () => {
     navigate(`/dashboard/properti/edit/${id}`);
   };
 
+  // useEffect call api function when dispatch effect
+  // useEffect(() => {
+  //   dispatch(fetchPropertyByID(id));
+  // }, [dispatch]);
+
   useEffect(() => {
-    dispatch(fetchPropertyByID(id));
+    dispatch(fetchByIdProperty(id));
   }, [dispatch]);
 
   return (
     <Stack>
       <NavBar menu={menu} isCurrentDashboard={true}></NavBar>
       {status === "default" ? (
+        // show this component if when finished process call api
         <Stack
           marginTop="100px"
           marginLeft="50px"
@@ -86,6 +104,7 @@ export const PropertiPage = () => {
           <Text>{property && property.data.description}</Text>
         </Stack>
       ) : (
+        // if status "loading", show Loading compoenent
         <Loading />
       )}
       <Stack position="fixed" bottom="5" right="5" zIndex="100" padding={2}>

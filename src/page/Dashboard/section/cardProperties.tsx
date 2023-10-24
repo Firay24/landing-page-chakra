@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+// import libray used
 import {
   Card,
   CardBody,
@@ -11,9 +13,13 @@ import {
   Link,
   Spacer,
 } from "@chakra-ui/react";
+
+// import icon from react icon
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { MdDelete } from "react-icons/md";
 import { FaCrown } from "react-icons/fa";
+
+// import style global
 import {
   backgroundContainer,
   primaryTextColor,

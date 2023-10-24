@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+// import from library used
 import {
   Button,
   HStack,
@@ -12,6 +14,8 @@ import {
   Tr,
   FormControl,
 } from "@chakra-ui/react";
+
+// import style
 import {
   backgroundContainer,
   customBorder,
@@ -20,6 +24,8 @@ import {
   primaryTextColor,
   secondaryTextColor,
 } from "../styles";
+
+// import react icons
 // import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 
@@ -96,7 +102,7 @@ const TableCompo = (props: {
           </Table>
         </Stack>
 
-        {/* //pagination  */}
+        {/* //pagination in modified  */}
         {props.pageLimit ? (
           <HStack
             width="100%"

@@ -85,6 +85,7 @@ const NavBar = (props: {
     >
       <Logo logoName="weather" />
       <Spacer />
+      {/* responsive navbar in mobile */}
       {isMobile ? (
         <>
           {isMenuOpen ? (
@@ -127,6 +128,7 @@ const NavBar = (props: {
           </Button>
         </>
       ) : (
+        // menu in large position
         <Box>
           <List display="flex" gap="10">
             {props.menu.map((item, index) => (
@@ -144,6 +146,7 @@ const NavBar = (props: {
         </Box>
       )}
       {!isMobile ? (
+        // if position large, button add in spacer with menu
         <>
           <Spacer />
           <Box>

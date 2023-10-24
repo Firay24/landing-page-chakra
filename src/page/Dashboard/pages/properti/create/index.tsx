@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+// import library used
 import {
   FormControl,
   FormLabel,
@@ -11,14 +13,19 @@ import {
   Button,
   Text,
 } from "@chakra-ui/react";
-import NavBar from "../../../../../components/Navbar";
 import { useEffect, useState } from "react";
+import NavBar from "../../../../../components/Navbar";
 import { useNavigate } from "react-router-dom";
-import { primaryTextColor } from "../../../../../components/styles";
 import { useDispatch, useSelector } from "react-redux";
+// use react hook form to form handling
+import { useForm } from "react-hook-form";
+
+// importt global state
+import { primaryTextColor } from "../../../../../components/styles";
+
+// import action and state selectors from redux flow
 import { selectPropertyStatus } from "../../../../../state/selectors/property";
 import { createProperty } from "../../../../../state/actions/property";
-import { useForm } from "react-hook-form";
 
 const CreatePage = () => {
   const dispatch = useDispatch();
@@ -32,31 +39,32 @@ const CreatePage = () => {
   const menu = ["Project", "Active", "Productivity", "Teams"];
   const navigate = useNavigate();
 
-  const [properti, setProperti] = useState({
-    property_name: "",
-    alamat: "",
-    description: "",
-    image_url: "http://dummyimage.com/171x148.png/ff4444/ffffff",
-    is_premium: false,
-  });
+  // const [properti, setProperti] = useState({
+  //   property_name: "",
+  //   alamat: "",
+  //   description: "",
+  //   image_url: "http://dummyimage.com/171x148.png/ff4444/ffffff",
+  //   is_premium: false,
+  // });
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    if (name === "is_premium") {
-      const updateType = value === "true";
-      console.log(updateType);
-      setProperti((prevState) => ({
-        ...prevState,
-        [name]: updateType,
-      }));
-    } else {
-      setProperti((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
-    }
-  };
+  // const handleChange = (e: any) => {
+  //   const { name, value } = e.target;
+  //   if (name === "is_premium") {
+  //     const updateType = value === "true";
+  //     console.log(updateType);
+  //     setProperti((prevState) => ({
+  //       ...prevState,
+  //       [name]: updateType,
+  //     }));
+  //   } else {
+  //     setProperti((prevState) => ({
+  //       ...prevState,
+  //       [name]: value,
+  //     }));
+  //   }
+  // };
 
+  // handle submit function: call api function then navigate dashboard page
   const onAddProperty = (data: any) => {
     dispatch(createProperty(data));
     if (status === "default") {
@@ -64,6 +72,7 @@ const CreatePage = () => {
     }
   };
 
+  // handle to add default value
   useEffect(() => {
     setValue("is_premium", false);
     setValue("image_url", "http://dummyimage.com/171x148.png/ff4444/ffffff");
@@ -106,6 +115,7 @@ const CreatePage = () => {
         marginBottom="50px"
       >
         <Heading>Tambah Properti</Heading>
+        {/* form component */}
         <form onSubmit={handleSubmit(onAddProperty)}>
           <Stack marginTop="20px">
             <FormControl display="flex" flexDirection="column" gap={6}>

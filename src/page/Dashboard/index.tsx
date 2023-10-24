@@ -19,23 +19,23 @@ import {
   selectPropertyStatus,
 } from "../../state/selectors/property";
 import { fetchProperty, removeProperty } from "../../state/actions/property";
-// import { fetchAllProperty } from "../../thunk/property";
+import { fetchAllProperty, removePropertyId } from "../../thunk/property";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const property = useSelector(selectProperty);
-  const status = useSelector(selectPropertyStatus);
+  // const property = useSelector(selectProperty);
+  // const status = useSelector(selectPropertyStatus);
   const menu = ["Project", "Active", "Productivity", "Teams"];
   const navigate = useNavigate();
-  // const { property, status } = useSelector((state: any) => state.property);
-
-  useEffect(() => {
-    dispatch(fetchProperty());
-  }, [dispatch]);
+  const { property, status } = useSelector((state: any) => state.property);
 
   // useEffect(() => {
-  //   dispatch(fetchAllProperty());
+  //   dispatch(fetchProperty());
   // }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchAllProperty());
+  }, [dispatch]);
 
   const handleBack = () => {
     navigate("/");
@@ -46,9 +46,9 @@ const Dashboard = () => {
   };
 
   const onDelete = (id: any) => {
-    dispatch(removeProperty(id))
+    dispatch(removePropertyId(id))
       .then(() => {
-        dispatch(fetchProperty());
+        dispatch(fetchAllProperty());
       })
       .catch((error: any) => {
         console.error("Error deleting property: ", error);
