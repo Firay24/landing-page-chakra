@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Box,
   Button,
@@ -17,10 +18,15 @@ import { Logo } from "./section/Logo";
 import { OAuthButtonGroup } from "./section/OAuthButtonGroup";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setEmail, setPassword } from "../../state/reducers/auth";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const email = useSelector((state: any) => state.auth.email);
+  const password = useSelector((state: any) => state.auth.password);
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = () => {
@@ -65,7 +71,7 @@ const Login = () => {
                   id="email"
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => dispatch(setEmail(e.target.value))}
                 />
               </FormControl>
               <FormControl>
@@ -74,7 +80,7 @@ const Login = () => {
                   id="password"
                   type="password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => dispatch(setPassword(e.target.value))}
                 />
               </FormControl>
             </Stack>
