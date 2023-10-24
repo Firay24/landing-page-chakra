@@ -31,13 +31,18 @@ import { decrypt } from "../../../../../util/descrypt";
 // import state global and action from redux flow
 import { selectPropertyStatus } from "../../../../../state/selectors/property";
 import { editProperty } from "../../../../../state/actions/property";
+import {
+  fetchByIdProperty,
+  updateProperty,
+} from "../../../../../thunk/property";
 
 const EditPropertiPage = () => {
   const dispatch = useDispatch();
-  const status = useSelector(selectPropertyStatus);
+  // const status = useSelector(selectPropertyStatus);
   const menu = ["Project", "Active", "Productivity", "Teams"];
   const navigate = useNavigate();
   const { id } = useParams();
+  const { property, status } = useSelector((state: any) => state.property);
   const [prevProperti, setPrevProperti] = useState({
     property_name: "",
     alamat: "",
@@ -54,19 +59,19 @@ const EditPropertiPage = () => {
     is_premium: false,
   });
 
-  const getData = async (idproperti: any) => {
-    await axios
-      .get(
-        `https://probation.sirkell.com/probation/test/properties/${idproperti}`
-      )
-      .then((res: any) => {
-        const result = decrypt(res.data);
-        setPrevProperti(result.data);
-      })
-      .catch((error) => {
-        console.log(error.response.status);
-      });
-  };
+  // const getData = async (idproperti: any) => {
+  //   await axios
+  //     .get(
+  //       `https://probation.sirkell.com/probation/test/properties/${idproperti}`
+  //     )
+  //     .then((res: any) => {
+  //       const result = decrypt(res.data);
+  //       setPrevProperti(result.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error.response.status);
+  //     });
+  // };
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -111,9 +116,16 @@ const EditPropertiPage = () => {
   //   }
   // };
 
+  // const onUpdateProperty = (e: any) => {
+  //   e.preventDefault();
+  //   dispatch(editProperty(properti, id));
+  //   if (status === "default") {
+  //     navigate("/dashboard");
+  //   }
+  // };
   const onUpdateProperty = (e: any) => {
     e.preventDefault();
-    dispatch(editProperty(properti, id));
+    dispatch(updateProperty({ property: properti, id }));
     if (status === "default") {
       navigate("/dashboard");
     }
@@ -131,9 +143,17 @@ const EditPropertiPage = () => {
     }
   }, [prevProperti]);
 
+  // useEffect(() => {
+  //   getData(id);
+  // }, [id]);
+
   useEffect(() => {
-    getData(id);
-  }, [id]);
+    dispatch(fetchByIdProperty(id)).then((action) => {
+      if (fetchByIdProperty.fulfilled.match(action)) {
+        setPrevProperti(action.payload.data);
+      }
+    });
+  }, [dispatch, id]);
 
   return (
     <Stack>

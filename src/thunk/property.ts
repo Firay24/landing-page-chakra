@@ -2,6 +2,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { decrypt } from "../util/descrypt";
 import axios from "axios";
+import { encrypt } from "../util/encrypt";
+import qs from "qs";
 
 export const fetchAllProperty = createAsyncThunk(
   "property/fetchAll",
@@ -36,6 +38,46 @@ export const removePropertyId = createAsyncThunk(
   }
 );
 
+export const updateProperty = createAsyncThunk(
+  "property/update",
+  async ({ id, property }: { id: any; property: any }) => {
+    const data = {
+      payload: encrypt(property),
+    };
+    const config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    };
+    const response = await axios.patch(
+      `https://probation.sirkell.com/probation/test/properties/${id}`,
+      qs.stringify(data),
+      config
+    );
+    return decrypt(response.data);
+  }
+);
+
+export const createProperty = createAsyncThunk(
+  "property/create",
+  async (property: any) => {
+    const data = {
+      payload: encrypt(property),
+    };
+    const config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    };
+    const response = await axios.post(
+      `https://probation.sirkell.com/probation/test/properties`,
+      qs.stringify(data),
+      config
+    );
+    return decrypt(response.data);
+  }
+);
+
 const commonAsyncActions = (builder: any, asyncThunk: any) => {
   builder
     .addCase(asyncThunk.pending, (state: any) => {
@@ -64,6 +106,8 @@ const propertySlice = createSlice({
     commonAsyncActions(builder, fetchAllProperty);
     commonAsyncActions(builder, fetchByIdProperty);
     commonAsyncActions(builder, removePropertyId);
+    commonAsyncActions(builder, updateProperty);
+    commonAsyncActions(builder, createProperty);
   },
 });
 

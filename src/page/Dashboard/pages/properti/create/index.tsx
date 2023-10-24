@@ -25,7 +25,7 @@ import { primaryTextColor } from "../../../../../components/styles";
 
 // import action and state selectors from redux flow
 import { selectPropertyStatus } from "../../../../../state/selectors/property";
-import { createProperty } from "../../../../../state/actions/property";
+import { createProperty } from "../../../../../thunk/property";
 
 const CreatePage = () => {
   const dispatch = useDispatch();
