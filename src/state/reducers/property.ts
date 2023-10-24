@@ -51,6 +51,7 @@ export default function propertyReducer(state = initialState, action: any) {
         ...state,
         status: "default",
         payload: [state.payload, action.payload],
+        error: null,
       };
     }
     case UPDATE_PROPERTY: {

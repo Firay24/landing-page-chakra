@@ -88,8 +88,6 @@ export const createProperty = (property: any) => {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       };
-
-      console.log(data);
       await axios.post(
         "https://probation.sirkell.com/probation/test/properties",
         qs.stringify(data),

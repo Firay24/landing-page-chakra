@@ -9,18 +9,26 @@ import {
   Textarea,
   Select,
   Button,
+  Text,
 } from "@chakra-ui/react";
 import NavBar from "../../../../../components/Navbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { primaryTextColor } from "../../../../../components/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPropertyStatus } from "../../../../../state/selectors/property";
 import { createProperty } from "../../../../../state/actions/property";
+import { useForm } from "react-hook-form";
 
 const CreatePage = () => {
   const dispatch = useDispatch();
   const status = useSelector(selectPropertyStatus);
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
   const menu = ["Project", "Active", "Productivity", "Teams"];
   const navigate = useNavigate();
 
@@ -49,12 +57,18 @@ const CreatePage = () => {
     }
   };
 
-  const onAddProperty = () => {
-    dispatch(createProperty(properti));
+  const onAddProperty = (data: any) => {
+    dispatch(createProperty(data));
     if (status === "default") {
       navigate("/dashboard");
     }
   };
+
+  useEffect(() => {
+    setValue("is_premium", false);
+    setValue("image_url", "http://dummyimage.com/171x148.png/ff4444/ffffff");
+  }, [setValue]);
+
   // console.log(encrypt(properti));
   // console.log(properti);
 
@@ -92,35 +106,46 @@ const CreatePage = () => {
         marginBottom="50px"
       >
         <Heading>Tambah Properti</Heading>
-        <form onSubmit={onAddProperty}>
+        <form onSubmit={handleSubmit(onAddProperty)}>
           <Stack marginTop="20px">
             <FormControl display="flex" flexDirection="column" gap={6}>
               <Stack>
                 <Stack>
                   <FormLabel>Nama Properti</FormLabel>
                   <Input
+                    {...register("property_name", {
+                      required: "Nama harus diisi",
+                    })}
                     type="text"
-                    name="property_name"
-                    value={properti.property_name}
-                    onChange={handleChange}
+                    // name="property_name"
+                    // value={properti.property_name}
+                    // onChange={handleChange}
                   />
+                  {errors.property_name && (
+                    <Text>{errors.property_name.message}</Text>
+                  )}
                 </Stack>
                 <Stack>
                   <FormLabel>Alamat</FormLabel>
                   <Input
+                    {...register("alamat", {
+                      required: "Alamat harus diisi",
+                    })}
                     type="text"
-                    name="alamat"
-                    value={properti.alamat}
-                    onChange={handleChange}
+                    // name="alamat"
+                    // value={properti.alamat}
+                    // onChange={handleChange}
                   />
+                  {errors.alamat && <Text>{errors.alamat.message}</Text>}
                 </Stack>
                 <Stack>
                   <FormLabel>Status</FormLabel>
                   <Select
-                    name="is_premium"
+                    {...(register("is_premium"), { valueAsNumber: true })}
                     placeholder="Select status"
-                    value={properti.is_premium ? "true" : "false"}
-                    onChange={handleChange}
+                    // name="is_premium"
+                    // value={properti.is_premium ? "true" : "false"}
+                    // onChange={handleChange}
                   >
                     <option value="true">Premium</option>
                     <option value="false">No-premium</option>
@@ -129,9 +154,10 @@ const CreatePage = () => {
                 <Stack>
                   <FormLabel>Deskripsi</FormLabel>
                   <Textarea
-                    name="description"
-                    value={properti.description}
-                    onChange={handleChange}
+                    {...register("description")}
+                    // name="description"
+                    // value={properti.description}
+                    // onChange={handleChange}
                   />
                 </Stack>
               </Stack>
