@@ -4,38 +4,52 @@
 // import library used
 import { Image, Stack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 // import components
 import NavBar from "../../components/Navbar";
 import TableCompo from "../../components/Table";
+import { fetchAllUser } from "../../thunk/users";
 // import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 // import { primaryTextColor } from "../../components/styles";
 
 const TablePage = () => {
   const menu = ["Research", "Climate", "Service", "About Us"];
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentLimit, setCurrentLimit] = useState(5);
+  const [currentLimit, setCurrentlimit] = useState(5);
   const [pageLimit, setPageLimit] = useState(1);
-  const [data, setData] = useState({});
+  // const [data, setData] = useState({});
+  const dispatch = useDispatch();
+  const { users } = useSelector((state: any) => state.users);
 
-  const getData = async () => {
-    await axios
-      .get(
-        `https://reqres.in/api/users?page=${currentPage}&per_page=${currentLimit}`
-      )
-      .then((res: any) => {
-        setData(res.data);
-        setPageLimit(res.data.total_pages);
-      })
-      .catch((error) => {
-        console.log(error.response.status);
-      });
-  };
+  // const getData = async () => {
+  //   await axios
+  //     .get(
+  //       `https://reqres.in/api/users?page=${currentPage}&per_page=${currentLimit}`
+  //     )
+  //     .then((res: any) => {
+  //       setData(res.data);
+  //       setPageLimit(res.data.total_pages);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error.response.status);
+  //     });
+  // };
+
+  // useEffect(() => {
+  //   getData();
+  // }, [currentPage, currentLimit]);
 
   useEffect(() => {
-    getData();
-  }, [currentPage, currentLimit]);
+    dispatch(fetchAllUser({ currentPage, currentLimit }));
+  }, [dispatch, currentPage, currentLimit]);
+
+  useEffect(() => {
+    if (users) {
+      setPageLimit(users.total_pages);
+    }
+  }, [users]);
 
   const columns = [
     {
@@ -71,12 +85,13 @@ const TablePage = () => {
         {/* custom components */}
         <TableCompo
           columns={columns}
-          data={data && data}
+          data={users && users}
           tableName="User"
           pageLimit={pageLimit}
           currentPage={currentPage}
+          currentLimit={currentLimit}
           setCurrentPage={(value: any) => setCurrentPage(value)}
-          setCurrentlimit={(value: any) => setCurrentLimit(value)}
+          setCurrentlimit={(value: any) => setCurrentlimit(value)}
           description="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
         />
       </Stack>
