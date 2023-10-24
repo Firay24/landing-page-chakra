@@ -1,10 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+// import library used
 import { Image, Stack } from "@chakra-ui/react";
-import NavBar from "../../components/Navbar";
-import TableCompo from "../../components/Table";
 import { useEffect, useState } from "react";
 import axios from "axios";
+
+// import components
+import NavBar from "../../components/Navbar";
+import TableCompo from "../../components/Table";
 // import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 // import { primaryTextColor } from "../../components/styles";
 
@@ -28,22 +32,6 @@ const TablePage = () => {
         console.log(error.response.status);
       });
   };
-
-  // const handlePage = (value: number) => {
-  //   setCurrentPage(value);
-  // };
-
-  // const handlePrevButton = () => {
-  //   setCurrentPage((prevPage) => prevPage - 1);
-  // };
-
-  // const handleNextButton = () => {
-  //   setCurrentPage((prevPage) => prevPage + 1);
-  // };
-
-  // const handleOnChange = (event: any) => {
-  //   setCurrentLimit(event.target.value);
-  // };
 
   useEffect(() => {
     getData();
@@ -80,6 +68,7 @@ const TablePage = () => {
     <Stack>
       <NavBar menu={menu} />
       <Stack marginTop={"100px"}>
+        {/* custom components */}
         <TableCompo
           columns={columns}
           data={data && data}

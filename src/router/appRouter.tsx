@@ -1,10 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+// import library used
 import {
   Route,
   RouterProvider,
   createBrowserRouter,
   createRoutesFromChildren,
 } from "react-router-dom";
+import { createContext, useEffect, useState } from "react";
+
+// import components
 import LandingPage from "../page/LandingPage";
 import Dashboard from "../page/Dashboard";
 import Project from "../page/Dashboard/pages/project";
@@ -16,9 +21,10 @@ import TablePage from "../page/Table";
 import PropertiCreatePage from "../page/Dashboard/pages/properti/create";
 import EditPropertiPage from "../page/Dashboard/pages/properti/edit";
 import Login from "../page/Login";
-import CheckAuth from "../middleware/authMiddleware";
-import { createContext, useEffect, useState } from "react";
 import Layout from "../page/Layout";
+
+// import middlewae to login auth
+import CheckAuth from "../middleware/authMiddleware";
 
 export const ThemeContext: any = createContext(null);
 

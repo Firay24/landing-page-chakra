@@ -1,3 +1,4 @@
+// import  library used
 import {
   Heading,
   Image,
@@ -11,11 +12,19 @@ import {
   GridItem,
   SimpleGrid,
 } from "@chakra-ui/react";
-import HeroImage from "../../../assets/hero.jpg";
-import { AiFillCloud } from "react-icons/ai";
-import { HiOutlineLocationMarker } from "react-icons/hi";
+
+// import component
 import TempList from "./tempList";
+
+// import asset image and icon from react icon
+import HeroImage from "../../../assets/hero.jpg";
+import { HiOutlineLocationMarker } from "react-icons/hi";
+import { AiFillCloud } from "react-icons/ai";
+
+// utils data
 import dataTemp from "../../../util/dataTemp";
+
+// import global style
 import {
   backgroundContainer,
   primaryTextColor,
@@ -54,6 +63,7 @@ const HeroSection = () => {
         justifyContent="center"
         zIndex="1"
       >
+        {/* hero component */}
         <Grid templateColumns="repeat(3, 1fr)" marginX="160px">
           <GridItem colSpan={2}>
             <Heading fontSize="5xl" fontWeight="semibold" color="gray.800">
@@ -70,6 +80,7 @@ const HeroSection = () => {
             </Text>
           </GridItem>
           <GridItem>
+            {/* card weather */}
             <Card
               width="fit-content"
               dropShadow="lg"
@@ -124,6 +135,7 @@ const HeroSection = () => {
         justifyContent="center"
         zIndex="2"
       >
+        {/* detail card */}
         <Card
           width="80%"
           boxShadow="md"

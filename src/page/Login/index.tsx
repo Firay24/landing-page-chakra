@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+// import library used
 import {
   Box,
   Button,
@@ -14,20 +16,24 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+// import components
 import { Logo } from "./section/Logo";
 import { OAuthButtonGroup } from "./section/OAuthButtonGroup";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+
+// import action from redux flow
 import { setEmail, setPassword } from "../../thunk/auth";
 
 const Login = () => {
   const dispatch = useDispatch();
   const email = useSelector((state: any) => state.auth.email);
   const password = useSelector((state: any) => state.auth.password);
+  const navigate = useNavigate();
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
-  const navigate = useNavigate();
 
   const handleLogin = () => {
     if (email === "fira@gmail.com" && password === "1234") {
@@ -65,6 +71,7 @@ const Login = () => {
         >
           <Stack spacing="6">
             <Stack spacing="5">
+              {/* form components */}
               <FormControl>
                 <FormLabel htmlFor="email">Email</FormLabel>
                 <Input

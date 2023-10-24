@@ -1,4 +1,6 @@
+// import library used
 import { HStack, Text } from "@chakra-ui/react";
+// import icons from react-icons
 import {
   PiNotionLogoBold,
   PiPaperPlaneBold,

@@ -1,4 +1,6 @@
+// import library used
 import { HStack, Text } from "@chakra-ui/react";
+// import global style
 import { primaryTextColor } from "../../../components/styles";
 
 const TempList = (props: { indicator: string; value: string }) => {
